@@ -1,7 +1,3 @@
-//
-// Created by Manju Muralidharan on 10/19/25.
-//
-
 #ifndef HEAP_H
 #define HEAP_H
 
