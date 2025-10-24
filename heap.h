@@ -46,13 +46,24 @@ struct MinHeap {
 
 
         return weightArr[0]; // Return root (contains smallest index)
-
-
-        return -1; // placeholder
     }
 
     void upheap(int pos, int weightArr[]) {
         // TODO: swap child upward while smaller than parent
+        if (size == 0) {
+            cout << "Heap is empty. Cannot upheap." << endl;
+        }
+        if (size == 1) {
+            cout << "Heap only has one element. No need to upheap." << endl;
+        }
+
+        int i = pos;
+        while (weightArr[2*i + 1] < weightArr[(i - 1) / 2]) { // Compare left child to parent
+            int tempParent = weightArr[(i - 1) / 2]; // Store old parent
+            weightArr[(i - 1) / 2] = weightArr[2*i + 1];
+            weightArr[2*i + 1] = tempParent;
+        }
+        // Parent: (i - 1) / 2, children: 2*i + 1, 2*i + 2.
     }
 
     void downheap(int pos, int weightArr[]) {
