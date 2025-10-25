@@ -50,24 +50,53 @@ struct MinHeap {
 
     void upheap(int pos, int weightArr[]) {
         // TODO: swap child upward while smaller than parent
-        if (size == 0) {
+        if (size == 0) { // If empty, cannot upheap
             cout << "Heap is empty. Cannot upheap." << endl;
+            return;
         }
-        if (size == 1) {
+        if (size == 1) { // If only one element, cannot upheap
             cout << "Heap only has one element. No need to upheap." << endl;
+            return;
         }
 
         int i = pos;
-        while (weightArr[2*i + 1] < weightArr[(i - 1) / 2]) { // Compare left child to parent
+        while (weightArr[i] < weightArr[(i - 1) / 2]) { // Compare target index to parent
             int tempParent = weightArr[(i - 1) / 2]; // Store old parent
-            weightArr[(i - 1) / 2] = weightArr[2*i + 1];
-            weightArr[2*i + 1] = tempParent;
+            weightArr[(i - 1) / 2] = weightArr[i];
+            weightArr[i] = tempParent;
         }
         // Parent: (i - 1) / 2, children: 2*i + 1, 2*i + 2.
+        // Fix i?
+
     }
 
     void downheap(int pos, int weightArr[]) {
         // TODO: swap parent downward while larger than any child
+        if (size == 0) { // If empty, cannot downheap
+            cout << "Heap is empty. Cannot downheap." << endl;
+            return;
+        }
+        if (size == 1) { // If only one element, cannot downheap
+            cout << "Heap only has one element. No need to downheap." << endl;
+            return;
+        }
+
+        int i = pos;
+        while ((weightArr[(i - 1) / 2] > weightArr[2*i + 1]) ||
+              (weightArr[(i - 1) / 2] > weightArr[2*i + 2])) { // Downheap if parent is greater than either child
+            if (weightArr[(i - 1) / 2] > weightArr[2*i + 1]) { // If parent is greater than left child, swap
+                int tempParent = weightArr[(i - 1) / 2];
+                weightArr[(i - 1) / 2] = weightArr[2*i + 1];
+                weightArr[2*i + 1] = tempParent;
+            }
+            if (weightArr[(i - 1) / 2] > weightArr[2*i + 2]) { // If parent is greater than right child, swap
+                int tempParent = weightArr[(i - 1) / 2];
+                weightArr[(i - 1) / 2] = weightArr[2*i + 2];
+                weightArr[2*i + 2] = tempParent;
+            }
+
+            // Fix??
+        }
     }
 };
 
