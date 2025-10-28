@@ -10,24 +10,32 @@ struct MinHeap {
 
     MinHeap() { size = 0; }
 
+    /**
+     * The push function inserts a given index at the end of the heap and restores order through upheap
+     * @param idx : Index value to insert
+     * @param weightArr : Array to modify
+     */
     void push(int idx, int weightArr[]) {
-        // TODO: insert index at end of heap, restore order using upheap().
         if (size >= 64) { // Check array out of bounds past index 63 (array only has indices 0 to 63, totalling 64)
             cout << "Index out of bounds. Cannot push." << endl;
             return;
         }
 
-        weightArr[size] = idx; // Insert index at end of heap
+        data[size] = idx; // Insert index at end of heap
 
         upheap(size, weightArr); // Upheap after insertion
 
         size++; // Update size
     }
 
+    /**
+     * The pop function removes and returns the smallest index of a given array; it restores order through downheap
+     * @param weightArr : Array to modify
+     * @return : Smallest index
+     */
     int pop(int weightArr[]) {
-        // TODO: remove and return smallest index
         // Replace root with last element, then call downheap()
-        int minIndex = weightArr[0]; // Save smallest index
+        int minIndex = data[0]; // Save smallest index
 
         if (size == 0) {  // If heap is already empty, do not pop; just return 0 index
             cout << "Heap is empty. Cannot pop; returning -1 index." << endl;
@@ -39,7 +47,7 @@ struct MinHeap {
             return minIndex;
         }
 
-        weightArr[0] = weightArr[size - 1]; // Replace root with last element
+        data[0] = data[size - 1]; // Replace root with last element
         size--;
 
         downheap(0, weightArr); // Downheap from root after deletion
@@ -47,8 +55,12 @@ struct MinHeap {
         return minIndex; // Return root (contains smallest index)
     }
 
+    /**
+     * The upheap function repeatedly swaps the child upward as long as it is smaller than its parent
+     * @param pos : Keep track of node
+     * @param weightArr : Array to modify
+     */
     void upheap(int pos, int weightArr[]) { // Upheap and downheap should both be O(logn); therefore so are pop and push
-        // TODO: swap child upward while smaller than parent
         if (size == 0) { // If empty, cannot upheap
             cout << "Heap is empty. Cannot upheap." << endl;
             return;
@@ -68,8 +80,12 @@ struct MinHeap {
         }
     }
 
+    /**
+     * The downheap function repeatedly swaps the parent downward as long as it is larger than any child
+     * @param pos : Keep track of node
+     * @param weightArr : Array to modify
+     */
     void downheap(int pos, int weightArr[]) {
-        // TODO: swap parent downward while larger than any child
         if (size == 0) { // If empty, cannot downheap
             cout << "Heap is empty. Cannot downheap." << endl;
             return;
@@ -88,8 +104,8 @@ struct MinHeap {
 
             currChild = leftChild; // Start at left child
 
-            if ((rightChild < size) && (weightArr[rightChild] < weightArr[currChild])) {
-                currChild = rightChild; // If right child is in array and less than left, set right as current
+            if ((rightChild < size) && (weightArr[rightChild] < weightArr[currChild])) { // Check if right child in array and < left
+                currChild = rightChild;
             }
 
             if (weightArr[currChild] >= weightArr[i]) { // If smallest child is already smaller than parent, no need for downheap
