@@ -12,8 +12,7 @@ struct MinHeap {
 
     void push(int idx, int weightArr[]) {
         // TODO: insert index at end of heap, restore order using upheap().
-        // Fix this size condition below:::::::::::::::::::::::::::::: What is max array size?
-        if (size >= ???) { // Check index out of bounds
+        if (size >= 64) { // Check array out of bounds past index 63 (array only has indices 0 to 63, totalling 64)
             cout << "Index out of bounds. Cannot push." << endl;
             return;
         }
@@ -48,7 +47,7 @@ struct MinHeap {
         return minIndex; // Return root (contains smallest index)
     }
 
-    void upheap(int pos, int weightArr[]) { // Upheap and downheap should both be O(logn); therefore also pop and push
+    void upheap(int pos, int weightArr[]) { // Upheap and downheap should both be O(logn); therefore so are pop and push
         // TODO: swap child upward while smaller than parent
         if (size == 0) { // If empty, cannot upheap
             cout << "Heap is empty. Cannot upheap." << endl;
