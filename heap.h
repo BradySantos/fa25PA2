@@ -79,7 +79,7 @@ struct MinHeap {
             data[i] = tempParent; // Set current node to old parent
 
             i = (i - 1) / 2; // Move up (O(logn))
-            parent = (i - 2) / 2;
+            parent = i;
         }
     }
 
