@@ -71,12 +71,15 @@ struct MinHeap {
         }
 
         int i = pos;
-        while ((i > 0) && (weightArr[i] < weightArr[(i - 1)/ 2])) { // Compare target index to parent
-            int tempParent = weightArr[(i - 1) / 2]; // Store old parent
-            weightArr[(i - 1) / 2] = weightArr[i]; // Parent: (i - 1) / 2
-            weightArr[i] = tempParent;
+        int parent = (i - 2) / 2; // Parent node
+
+        while ((i > 0) && (weightArr[data[i]] < weightArr[data[parent]])) { // Compare target index to parent
+            int tempParent = data[parent]; // Store old parent
+            data[parent] = data[i]; // Set parent as current node
+            data[i] = tempParent; // Set current node to old parent
 
             i = (i - 1) / 2; // Move up (O(logn))
+            parent = (i - 2) / 2;
         }
     }
 
@@ -104,17 +107,17 @@ struct MinHeap {
 
             currChild = leftChild; // Start at left child
 
-            if ((rightChild < size) && (weightArr[rightChild] < weightArr[currChild])) { // Check if right child in array and < left
+            if ((rightChild < size) && (weightArr[data[rightChild]] < weightArr[data[currChild]])) { // Check if right child in array and < left
                 currChild = rightChild;
             }
 
-            if (weightArr[currChild] >= weightArr[i]) { // If smallest child is already smaller than parent, no need for downheap
+            if (weightArr[data[currChild]] >= weightArr[data[i]]) { // If smallest child is already smaller than parent, no need for downheap
                 break;
             }
 
-            int tempParent = weightArr[i]; // Swap parent down
-            weightArr[i] = weightArr[currChild];
-            weightArr[currChild] = tempParent;
+            int tempParent = data[i]; // Swap parent down
+            data[i] = data[currChild];
+            data[currChild] = tempParent;
 
             i = currChild; // Update parent to child (O(logn))
         }
