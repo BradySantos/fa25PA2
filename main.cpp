@@ -96,18 +96,22 @@ int buildEncodingTree(int nextFree) {
     //    - Push new parent index back into the heap
     // 4. Return the index of the last remaining node (root)
     MinHeap heap;
-    for (const int leaf : weightArr) { // ???????? Figure out where leaves are stored
-        heap.push(leaf, weightArr);
+    for (int i = 0; i < nextFree; ++i) { // Push all used (leaf) indices into heap
+        heap.push(i, weightArr);
     }
 
     while (heap.size > 1) {
+        int parent = nextFree; // Makes room for new parent
         int firstSmallest = heap.pop(weightArr); // Pop first smallest
         int secondSmallest = heap.pop(weightArr); // Pop second smallest
-        int parent = firstSmallest + secondSmallest; // Combine first and second smallest into parent
 
-// Set left/right pointers/////
 
-        heap.push(parent, weightArr); // Push new parent index back into heap
+        weightArr[parent] = firstSmallest + secondSmallest; // Combine two smallest nodes
+
+        leftArr[parent] = firstSmallest; // Set left pointer of current parent
+        rightArr[parent] = secondSmallest; // Set right pointer of current parent
+
+        heap.push(parent, weightArr); // Push new parent back into heap
     }
 
     return weightArr[0]; // Return  index of root
