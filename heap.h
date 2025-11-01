@@ -42,7 +42,6 @@ struct MinHeap {
             return -1;
         }
         if (size == 1) { // If heap only has a root, remove root and return 0 index
-            cout << "Heap only has one element. Removing and returning smallest index." << endl;
             size--;
             return minIndex;
         }
@@ -61,17 +60,8 @@ struct MinHeap {
      * @param weightArr : Array to modify
      */
     void upheap(int pos, int weightArr[]) { // Upheap and downheap should both be O(logn); therefore so are pop and push
-        if (size == 0) { // If empty, cannot upheap
-            cout << "Heap is empty. Cannot upheap." << endl;
-            return;
-        }
-        if (size == 1) { // If only one element, cannot upheap
-            cout << "Heap only has one element. No need to upheap." << endl;
-            return;
-        }
-
         int i = pos;
-        int parent = (i - 2) / 2; // Parent node
+        int parent = (i - 1) / 2; // Parent node
 
         while ((i > 0) && (weightArr[data[i]] < weightArr[data[parent]])) { // Compare target index to parent
             int tempParent = data[parent]; // Store old parent
@@ -89,15 +79,6 @@ struct MinHeap {
      * @param weightArr : Array to modify
      */
     void downheap(int pos, int weightArr[]) {
-        if (size == 0) { // If empty, cannot downheap
-            cout << "Heap is empty. Cannot downheap." << endl;
-            return;
-        }
-        if (size == 1) { // If only one element, cannot downheap
-            cout << "Heap only has one element. No need to downheap." << endl;
-            return;
-        }
-
         int i = pos; // Parent start
         int currChild; // Track which child is being traced
 

@@ -100,21 +100,22 @@ int buildEncodingTree(int nextFree) {
         heap.push(i, weightArr);
     }
 
+    int parent = nextFree; // Tracks index
     while (heap.size > 1) {
-        int parent = nextFree; // Makes room for new parent
         int firstSmallest = heap.pop(weightArr); // Pop first smallest
         int secondSmallest = heap.pop(weightArr); // Pop second smallest
 
+        parent = nextFree; // Update tracker
+        weightArr[parent] = weightArr[firstSmallest] + weightArr[secondSmallest]; // Combine two smallest nodes into parent
 
-        weightArr[parent] = firstSmallest + secondSmallest; // Combine two smallest nodes
-
-        leftArr[parent] = firstSmallest; // Set left pointer of current parent
-        rightArr[parent] = secondSmallest; // Set right pointer of current parent
+        leftArr[parent] = firstSmallest; // Set left pointer index of current parent
+        rightArr[parent] = secondSmallest; // Set right pointer index of current parent
 
         heap.push(parent, weightArr); // Push new parent back into heap
+        nextFree++;
     }
 
-    return weightArr[0]; // Return  index of root
+    return heap.data[0]; // Return index of remaining node
 }
 
 // Step 4: Use an STL stack to generate codes
@@ -124,6 +125,31 @@ void generateCodes(int root, string codes[]) {
     // Left edge adds '0', right edge adds '1'.
     // Record code when a leaf node is reached.
 
+    if (root < 0) {
+        return; // If root is nonexistent, return
+    }
+
+    stack<pair<int, string>> codesStack; // Create stack
+
+    codesStack.push({root, ""}); // Push root and empty string to stack
+
+    while (!codesStack.empty()) {
+        pair<int, string> currVal = codesStack.top(); // Track current value of both node and string
+        codesStack.pop(); // Remove top node
+
+        if ((leftArr[currVal.first] == -1) && rightArr[currVal.first] == -1) { // Check if leaf node
+            int index = charArr[currVal.first] - 'a'; // Update index
+            codes[index] = currVal.second; // Update code string
+        }
+
+        if (leftArr[currVal.first] != -1) { // Left edge
+            codesStack.push({leftArr[currVal.first], currVal.second + "0"}); // Add 0 for left edge
+        }
+
+        if (rightArr[currVal.first] != -1) { // Right edge
+            codesStack.push({rightArr[currVal.first], currVal.second + "1"}); // Add 1 for right edge
+        }
+    }
 }
 
 // Step 5: Print table and encoded message
