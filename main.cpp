@@ -45,7 +45,11 @@ int main() {
     Function Definitions (Students will complete logic)
   ------------------------------------------------------*/
 
-// Step 1: Read file and count frequencies
+/**
+ * Step 1: Read file and count frequencies
+ * @param freq : Stores frequencies of letters
+ * @param filename : File to read
+ */
 void buildFrequencyTable(int freq[], const string& filename) {
     ifstream file(filename);
     if (!file.is_open()) {
@@ -68,7 +72,12 @@ void buildFrequencyTable(int freq[], const string& filename) {
     cout << "Frequency table built successfully.\n";
 }
 
-// Step 2: Create leaf nodes for each character
+
+/**
+ * Step 2: Create leaf nodes for each character
+ * @param freq : Stores frequencies of letters
+ * @return : Next available index
+ */
 int createLeafNodes(int freq[]) {
     int nextFree = 0;
     for (int i = 0; i < 26; ++i) {
@@ -84,14 +93,18 @@ int createLeafNodes(int freq[]) {
     return nextFree;
 }
 
-// Step 3: Build the encoding tree using heap operations
+/**
+ * Step 3: Build the encoding tree using heap operations
+ * @param nextFree : Track next available index
+ * @return : Index of final root node
+ */
 int buildEncodingTree(int nextFree) {
     MinHeap heap;
     for (int i = 0; i < nextFree; ++i) { // Push all used (leaf) indices into heap
         heap.push(i, weightArr);
     }
 
-    int parent = nextFree; // Tracks index
+    int parent; // Tracks index
     while (heap.size > 1) {
         int firstSmallest = heap.pop(weightArr); // Pop first smallest
         int secondSmallest = heap.pop(weightArr); // Pop second smallest
@@ -109,7 +122,11 @@ int buildEncodingTree(int nextFree) {
     return heap.data[0]; // Return index of remaining node
 }
 
-// Step 4: Use an STL stack to generate codes
+/**
+ * Step 4: Use an STL stack to generate codes
+ * @param root : Index to start from
+ * @param codes : Stores binary codes of letters
+ */
 void generateCodes(int root, string codes[]) {
     stack<pair<int, string>> codesStack; // Create stack
 
@@ -134,7 +151,11 @@ void generateCodes(int root, string codes[]) {
     }
 }
 
-// Step 5: Print table and encoded message
+/**
+ * Step 5: Print table and encoded message
+ * @param filename : File to read
+ * @param codes : Stores binary codes of letters
+ */
 void encodeMessage(const string& filename, string codes[]) {
     cout << "\nCharacter : Code\n";
     for (int i = 0; i < 26; ++i) {
