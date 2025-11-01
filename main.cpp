@@ -111,10 +111,6 @@ int buildEncodingTree(int nextFree) {
 
 // Step 4: Use an STL stack to generate codes
 void generateCodes(int root, string codes[]) {
-    if (root < 0) { // If root is nonexistent, return
-        return;
-    }
-
     stack<pair<int, string>> codesStack; // Create stack
 
     codesStack.push({root, ""}); // Push root and empty string to stack
