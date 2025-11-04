@@ -119,7 +119,7 @@ int buildEncodingTree(int nextFree) {
         nextFree++;
     }
 
-    return heap.data[0]; // Return index of remaining node
+    return parent; // Return index of root node
 }
 
 /**
